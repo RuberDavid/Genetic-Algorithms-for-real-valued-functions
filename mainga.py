@@ -2,6 +2,8 @@ import random
 from binaryga import *
 import statistics
 import testfunctions
+from icecream import ic
+import numpy as np
 import matplotlib.pyplot as plt
 import datetime
 
@@ -24,6 +26,8 @@ def bincode_ga(precis=None,
                ):
     """
     Álgoritmo genético con codificación binaria
+
+    :returns population, worst_apt_per_generation, mean_apt_per_generation, best_apt_per_generation
     """
     elite = []*max_num_generations
 
@@ -75,10 +79,10 @@ if __name__ == '__main__':
                    'size_population': 100,
                    'p_crosover': 0.5,
                    'p_mutation': 0.1,
-                   'max_num_generations': 100,
-                   'elitism': 0 ,
+                   'max_num_generations': 200,
+                   'len_elite': 0 ,
                    'tol_time': None,
-                   'plotting':True
+                   'plotting':False
                    }
     result, \
         worst_apt_per_generation, \
