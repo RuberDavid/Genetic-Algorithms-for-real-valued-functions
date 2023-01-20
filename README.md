@@ -1,2 +1,5 @@
 # Genetic-Algorithms-for-real-valued-functions
-# Genetic-Algorithms-for-real-valued-functionsdd
+
+Optimización de funciones reales multivariadas mediante algoritmos genéticos.
+
+
