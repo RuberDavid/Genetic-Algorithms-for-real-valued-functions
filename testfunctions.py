@@ -1,7 +1,8 @@
 import math
-# Funciones objetivo de prueba
+import numpy as np
 
 
+##
 def rastring(*args)->float:
     '''
     función Rastring para n variables
@@ -13,14 +14,15 @@ def rastring(*args)->float:
     return A*n + math.fsum([x_i**2 - A*math.cos(2*math.pi*x_i) for x_i in args ])
 
 
+
 rastring.vars_range = (-5.12,5.12)
 rastring.minima = [ (0,0) ] # TODO: definir para mayor dimensión
 
 
 def rosenbrock(*args):
     x = args
-    if not all([ abs(x_i) <= 5 for x_i in x ]):
-        raise ValueError
+    #if not all([ abs(x_i) <= 5 for x_i in x ]):
+    #    raise ValueError
     return math.fsum([100*(x[i+1] - x[i]**2)**2 + (1-x[i])**2 for i in range(len(x)-1) ] )
 
 
@@ -46,3 +48,22 @@ def eggholder(*args):
 
 # TODO: to give arrbitrary function
 ############################################################################
+
+if __name__ == '__main__':
+    import matplotlib.pyplot as plt
+
+    n = 100
+    xy = np.linspace(1, 100, 5)
+
+    y = rastring(x)
+    X, Y = np.meshgrid(x, y)
+
+    plt.axes([0.025, 0.025, 0.95, 0.95])
+
+    plt.contourf(X, Y, rastring(X, Y), 8, alpha=.75, cmap=plt.cm.hot)
+    C = plt.contour(X, Y, rastring(X, Y), 8, colors='black', linewidth=.5)
+    plt.clabel(C, inline=1, fontsize=10)
+
+    plt.xticks([])
+    plt.yticks([])
+    plt.show()

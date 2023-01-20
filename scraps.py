@@ -48,3 +48,11 @@ ind3.gen = RandBinGen( [random.choice([0,1]) for _ in range(ind.gen.dim * ind.ge
 ind4 = BinIndiv([random.choice([0,1]) for _ in range(ind.gen.dim * ind.gen.var_len)])
 
 off1, off2 =
+
+
+n = 100
+x = np.linspace(-5.12, 5.12, n)
+y = np.linspace(-5.12, 5.12, n)
+X, Y = np.meshgrid(x, y)
+
+plt.axes([0.025, 0.025, 0.95, 0.95])
