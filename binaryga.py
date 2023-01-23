@@ -4,6 +4,8 @@ import math
 import testfunctions
 import statistics
 from typing import Callable
+import matplotlib.pyplot as plt
+import time
 
 # Codificación
 
@@ -120,9 +122,10 @@ class BinIndiv:
         '''
         mutación de un bit
         '''
-        rand_index = random.randrange(0, len(self.gen))
-
+        n = len(self.gen)
         new_gen = self.gen.copy()
+        
+        rand_index = random.randrange(0, n)
         new_gen[rand_index] = (self.gen[rand_index] + 1) % 2 #
         self.gen = new_gen
 
@@ -130,7 +133,15 @@ def create_popul( size_pop :int ):
     return [BinIndiv() for _ in range(size_pop)]
 
 ############################################################################
+# Método de mutación
 
+def mutate(ind, p_mut):
+        new_gen = ind.gen.copy()
+        for i in range(len(new_gen)):
+            if random.random() <= p_mut:
+                new_gen[i] == (new_gen[i] + 1 )%2
+        ind.gen = new_gen
+#
 # Métodos de selección
 
 def select_permutation_tournament(pob: list, sent_opt='min') -> list:
@@ -209,6 +220,17 @@ def bincode_ga(precis=None,
     variance_apt_per_generation = [0]*max_num_generations
 
     BinIndiv.set_class_atr(test_function, lim_inf, lim_sup, num_vars, precis)
+    
+    if p_mutation == -1:
+        p_mutation = 1/(RandBinGen.var_len*RandBinGen.dim)
+    print(p_mutation)
+        
+    if plotting:
+        plt.figure(1)
+        plt.xlim(test_function.vars_range)
+        plt.ylim(test_function.vars_range)
+        global_minima = test_function.minima
+    
     num_generation = 0
     population = create_popul(size_population)
 
@@ -226,8 +248,7 @@ def bincode_ga(precis=None,
 
         # mutación
         for individual in next_generation:
-            if random.random() <= p_mutation:
-                individual.mutate()
+            mutate(individual, p_mutation) #
 
         population = next_generation
 
@@ -235,7 +256,16 @@ def bincode_ga(precis=None,
         worst_apt_per_generation[num_generation] = min(values)
         mean_apt_per_generation[num_generation] = statistics.fmean(values)
         best_apt_per_generation[num_generation] = min(values)
-
+        
+        if plotting:
+            phenotype_last_gen = [ind.fenotipo for ind in population]
+            plt.xlim(test_function.vars_range)
+            plt.ylim(test_function.vars_range)
+            plt.scatter(*zip(*global_minima), marker='X', color='red',zorder=1)
+            plt.scatter(*zip(*phenotype_last_gen), marker='.', color='blue',zorder=0)
+            plt.show()
+            plt.clf()
+            
         num_generation = num_generation + 1
     return population, worst_apt_per_generation, mean_apt_per_generation, best_apt_per_generation
 

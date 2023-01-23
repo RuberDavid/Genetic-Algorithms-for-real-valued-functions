@@ -36,14 +36,20 @@ def himmelblau(*args):
         raise ValueError
     return (x**2 + y - 11)**2 + (x + y**2 - 7)**2
 
-
-# TODO: mínimos
+himmelblau.vars_range = (-5,5)
+himmelblau.minima = [(3.0,  2.0),
+                     (-2.805118, 3.131312),
+                     (-3.779310, -3.283186),
+                     (3.584428, -1.848126)]
 
 def eggholder(*args):
     x,y = args[0], args[1]
     if not (abs(x) <= 512 and abs(y) <= 512 ):
         raise ValueError
     return -(y+47)*math.sin(math.sqrt(abs(x/2 + (y+47))) - x*math.sin(math.sqrt(abs(x-(y+47)))))
+
+eggholder.vars_range = (-512,512)
+eggholder.minima = []
 # TODO: mínimos
 
 # TODO: to give arrbitrary function

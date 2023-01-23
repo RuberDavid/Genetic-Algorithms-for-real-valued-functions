@@ -1,4 +1,3 @@
-import random
 from binaryga import *
 import statistics
 import testfunctions
@@ -7,29 +6,24 @@ import matplotlib.pyplot as plt
 import datetime
 
 if __name__ == '__main__':
-
-
+    func_obj = testfunctions.rastring
     parametros = { "precis": 4,
-                   "lim_inf": testfunctions.rastring.vars_range[0],
-                   'lim_sup': testfunctions.rastring.vars_range[1],
-                   'num_vars': 2,
-                   'test_function': testfunctions.rastring,
-                   'size_population': 100,
-                   'p_crosover': 0.5,
-                   'p_mutation': 0.1,
-                   'max_num_generations': 200,
-                   'len_elite': 0 ,
-                   'tol_time': None,
-                   'plotting':False
-                   }
-    result, \
-        worst_apt_per_generation, \
-        mean_apt_per_generation, \
-        best_apt_per_generation = bincode_ga(**parametros)
+                  "lim_inf": func_obj.vars_range[0],
+                  'lim_sup': func_obj.vars_range[1],
+                  'num_vars': 2,
+                  'test_function': func_obj,
+                  'size_population': 150,
+                  'p_crosover': 0.5,
+                  'p_mutation': -1, # por default : 1/ len(gen)
+                  'max_num_generations': 200,
+                  'len_elite': 0 ,
+                  'tol_time': None,
+                  'plotting': True
+                 }
 
-    result.sort(key=lambda x: x.val)
+    last_generation, \
+    worst_apt_per_generation, \
+    mean_apt_per_generation, \
+    best_apt_per_generation = bincode_ga(**parametros)
 
-    for i in result[:10]:
-        print(i)
-    print( mean_apt_per_generation)
 
