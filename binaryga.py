@@ -162,7 +162,7 @@ def select_permutation_tournament(pob: list, sent_opt='min') -> list:
 
 # TODO selección por ruleta
 # TODO selección por SUS
-############################################################################
+##########################################################################
 # Métodos de cruza
 
 # TODO cruza uniforme
@@ -221,8 +221,8 @@ def bincode_ga(precis=None,
 
     BinIndiv.set_class_atr(test_function, lim_inf, lim_sup, num_vars, precis)
     
-    if p_mutation == -1:
-        p_mutation = 1/(RandBinGen.var_len*RandBinGen.dim)
+    if p_mutation < 0:
+        p_mutation = 3/(RandBinGen.var_len*RandBinGen.dim)
     print(p_mutation)
         
     if plotting:
@@ -251,6 +251,8 @@ def bincode_ga(precis=None,
             mutate(individual, p_mutation) #
 
         population = next_generation
+        if elite:
+            elite[num_generation] = max(population, key = lambda x:x.val)
 
         values = [individual.val for individual in population]
         worst_apt_per_generation[num_generation] = min(values)
@@ -267,6 +269,7 @@ def bincode_ga(precis=None,
             plt.clf()
             
         num_generation = num_generation + 1
+
     return population, worst_apt_per_generation, mean_apt_per_generation, best_apt_per_generation
 
 # TODO implementación de prueba

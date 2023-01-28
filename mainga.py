@@ -14,9 +14,9 @@ if __name__ == '__main__':
                   'test_function': func_obj,
                   'size_population': 150,
                   'p_crosover': 0.5,
-                  'p_mutation': -1, # por default : 1/ len(gen)
-                  'max_num_generations': 200,
-                  'len_elite': 0 ,
+                  'p_mutation': -1, # si e : 1/ len(gen)
+                  'max_num_generations': 50,
+                  'len_elite': 1 ,
                   'tol_time': None,
                   'plotting': True
                  }

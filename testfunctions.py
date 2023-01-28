@@ -26,7 +26,7 @@ def rosenbrock(*args):
     return math.fsum([100*(x[i+1] - x[i]**2)**2 + (1-x[i])**2 for i in range(len(x)-1) ] )
 
 
-rosenbrock.vars_range = (-5,5)
+rosenbrock.vars_range = (-100,100)
 rosenbrock.minima = [ (1,1) ]
 
 
@@ -49,7 +49,7 @@ def eggholder(*args):
     return -(y+47)*math.sin(math.sqrt(abs(x/2 + (y+47))) - x*math.sin(math.sqrt(abs(x-(y+47)))))
 
 eggholder.vars_range = (-512,512)
-eggholder.minima = []
+eggholder.minima = [(512, 404.2319)]
 # TODO: mínimos
 
 # TODO: to give arrbitrary function

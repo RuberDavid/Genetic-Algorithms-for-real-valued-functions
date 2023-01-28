@@ -1,3 +1,4 @@
+import testfunctions
 from binaryga import *
 
 # def AG_testfunc_bincode( func_obj,
@@ -38,7 +39,7 @@ RandBinGen.set_class_atr(-5,5,2,4)
 gen = RandBinGen()
 gen2 = RandBinGen([random.choice([0,1]) for _ in range(RandBinGen.var_len*RandBinGen.dim)])
 
-BinIndiv.set_class_atr(testfunctions.rastring,-5.12, 5.12, 2, 4)
+BinIndiv.set_class_atr(testfunctions.rosenbrock,-5.12, 5.12, 2, 4)
 ind = BinIndiv()
 print(ind.gen)
 ind2 = BinIndiv()
