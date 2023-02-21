@@ -9,7 +9,7 @@ import time
 
 # Codificación
 
-class RandBinGen(list): #TODO: se puede heredar de np.ndarray?
+class RandBinGen(list): #TODO: se puede heredar de np.ndarray o de UserLIst
     lim_inf = None
     lim_sup = None
     dim = None
@@ -221,20 +221,31 @@ def bincode_ga(precis=None,
 
     BinIndiv.set_class_atr(test_function, lim_inf, lim_sup, num_vars, precis)
     
-    if p_mutation < 0:
+    if p_mutation == None:
         p_mutation = 3/(RandBinGen.var_len*RandBinGen.dim)
-    print(p_mutation)
-        
-    if plotting:
-        plt.figure(1)
-        plt.xlim(test_function.vars_range)
-        plt.ylim(test_function.vars_range)
-        global_minima = test_function.minima
-    
+    print("p_mutation", p_mutation)
+
     num_generation = 0
     population = create_popul(size_population)
 
-    #if plotting == True TODO
+    if plotting:
+        plt.title(f"Minimización de la función { test_function.__name__} con AG\n"
+                  f"p_mut = {p_mutation}\n"
+                  f"p_cruz = {p_crosover}\n"
+                  f"generación = {num_generation}")
+
+        plt.xlim(test_function.vars_range)
+        plt.ylim(test_function.vars_range)
+
+        global_minima = test_function.minima
+
+        plt.scatter(*zip(*global_minima), marker='X', color='red',zorder=max_num_generations+1)
+        plt.scatter(*zip(*[ind.fenotipo for ind in population]),
+                    marker='.', c=size_population*[num_generation],
+                    vmin = 0,vmax=max_num_generations, zorder=num_generation)
+
+    
+
     while num_generation < max_num_generations:
         # selección
         pool = select_permutation_tournament(population)
@@ -261,32 +272,22 @@ def bincode_ga(precis=None,
         
         if plotting:
             phenotype_last_gen = [ind.fenotipo for ind in population]
-            plt.xlim(test_function.vars_range)
-            plt.ylim(test_function.vars_range)
-            plt.scatter(*zip(*global_minima), marker='X', color='red',zorder=1)
-            plt.scatter(*zip(*phenotype_last_gen), marker='.', color='blue',zorder=0)
-            plt.show()
-            plt.clf()
+
+            plt.title(f"Minimización de la función { test_function.__name__} con AG\n"
+                      f"p_mut = {p_mutation}\n"
+                      f"p_cruz = {p_crosover}\n"
+                      f"generación = {num_generation}")
+            plt.scatter(*zip(*phenotype_last_gen),
+                        marker='.', c=size_population*[num_generation],
+                        vmin = 0,vmax=max_num_generations, zorder=num_generation)
+
+            plt.pause(0.025)
+            #plt.clf()
             
         num_generation = num_generation + 1
 
+    if plotting:
+        plt.show()
     return population, worst_apt_per_generation, mean_apt_per_generation, best_apt_per_generation
 
-# TODO implementación de prueba
-#def test_min_AG(len_gen: int,
-#                num_ind: int,
-#               prob_cruz: float,
-#                prob_mut: float,
-#                func_obj: Callable[[float, float], float],
-#                pool_select: Callable[[list], list],
-#                TOL=1000) -> (float, float):
-#    '''
-#    Implementación del algoritmo genético para minizar funciones vectoriales
-#    para un dominio en R²
-#
-#    La condición de paro es haber encontrado el óptimo global conocido o sobrepasar las TOL iteraciones
-#
-#    '''
-#
-#    return
-#
+
