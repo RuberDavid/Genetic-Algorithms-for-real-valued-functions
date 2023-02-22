@@ -190,6 +190,9 @@ def unif_cross(parent1, parent2):
 
 
 ############################################################################
+# plotting helper function
+def actulize_axes_helper(ax, data1, data2, param_dict):
+    out = ax.
 
 def bincode_ga(precis=None,
                lim_inf=None,
@@ -222,17 +225,17 @@ def bincode_ga(precis=None,
     BinIndiv.set_class_atr(test_function, lim_inf, lim_sup, num_vars, precis)
     
     if p_mutation == None:
-        p_mutation = 3/(RandBinGen.var_len*RandBinGen.dim)
+        p_mutation = 1/(RandBinGen.var_len*RandBinGen.dim)
     print("p_mutation", p_mutation)
 
     num_generation = 0
     population = create_popul(size_population)
 
     if plotting:
-        plt.title(f"Minimización de la función { test_function.__name__} con AG\n"
+        fig, (ax1, ax2) = plt.subplots(1,2)
+        fig.suptitle(f"Minimización de la función { test_function.__name__} con AG\n"
                   f"p_mut = {p_mutation}\n"
-                  f"p_cruz = {p_crosover}\n"
-                  f"generación = {num_generation}")
+                  f"p_cruz = {p_crosover}\n")
 
         plt.xlim(test_function.vars_range)
         plt.ylim(test_function.vars_range)
